@@ -1,0 +1,12 @@
+# DECISIONS.md
+- Kept the existing draft instead of rewriting it: it already encodes the security design; the phases now verify it.
+- Email one-time-code login (no passwords): fewer attack surfaces, easier on phones.
+- All writes go through server functions; direct table writes are revoked: row rules alone cannot protect status/tier fields.
+- Audio is a private bucket; access is checked when a playback link is created.
+- Offline tracks are stored as files in the browser cache, not links: links expire.
+- Service worker only caches the app shell; it never touches audio, so seeking works.
+- No room cap; invite links always join: matches the product rule.
+- Premium period length comes from the `premium.billing_cycle` setting; admin cannot type a date.
+- Webhook signature travels in the request body, not a header: Google Apps Script cannot read headers.
+- Watermarking, room chat/feed, analytics, share cards: not built (see docs/VINYL-SPEC.md).
+- Tailwind to be added in Phase 0 batch 2 (stack rule); existing CSS variables kept as brand tokens.
