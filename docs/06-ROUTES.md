@@ -39,8 +39,8 @@ function parseHash(): Route {
 }
 ```
 
-Query params are parsed into `route.params`. The only param used is `roomId` (`App.tsx:55`).
+Query params are parsed into `route.params`. The only params used are `roomId` (`App.tsx:55`) and `invite` (`HomePage.tsx:29-33`).
 
 ## No premium/admin route guards on app pages
 
-There is no route-level premium guard. Premium features are gated at the component level (e.g., `usePremium().hasFeature('game_access')` in `GamesTab.tsx`). The admin route is guarded by password, not by the `is_admin` profile flag.
+There is no route-level premium guard. Premium features are gated at the component level (e.g., `usePremium().hasFeature('game_access')` in `GamesTab.tsx:66`). The admin route is guarded by password, not by the `is_admin` profile flag.

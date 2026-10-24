@@ -50,15 +50,20 @@ Key constants in the script:
 
 **What it does:**
 1. Receives POST with `{ subscriptionId, userId }` from `SubscribeModal.tsx`
-2. Queries `user_subscriptions` and `profiles` for the subscription details
-3. Calls `public_get_webhook_url()` RPC to get the Apps Script URL
-4. If a webhook URL exists, fetches the receipt image via `getPublicUrl('vinyl-receipts', receipt_path)`
-5. POSTs the subscription + receipt data to the Apps Script webhook URL
-6. Returns success/failure
+2. Queries `user_subscriptions` and `profiles` for the subscription details (`index.ts:50-54, 88-92`)
+3. Calls `supabase.auth.admin.getUserById(userId)` to get the user's email (`index.ts:94`)
+4. Fetches `payment_webhook_url` and `premium_currency` from `app_settings` (`index.ts:70-74`)
+5. If a webhook URL exists, creates a signed URL for the receipt image via `createSignedUrl('vinyl-receipts', receipt_path, 3600)` (`index.ts:98-101`)
+6. Computes an HMAC-SHA256 signature using `WEBHOOK_SECRET` (`index.ts:9-21, 121`)
+7. POSTs the subscription + receipt data to the Apps Script webhook URL with `X-Vinyl-Signature` and `X-Vinyl-Timestamp` headers (`index.ts:125-133`)
+8. Updates `webhook_status` on the subscription row (`index.ts:139-142`)
+9. Returns success/failure
 
 **Auth:** Requires a valid Supabase JWT (Authorization header) — `SubscribeModal.tsx:77` passes the session access token.
 
-**CORS:** Must include the standard CORS headers (per Bolt Supabase guidelines).
+**CORS:** Standard CORS headers included (`index.ts:3-7`, `index.ts:24-26`).
+
+**Signature verification:** The edge function signs the payload with HMAC-SHA256 using `WEBHOOK_SECRET`. The Apps Script template (`AdminPage.tsx:1591-1788`) does NOT verify the signature — it accepts all incoming POSTs. This is a security gap (see 10-KNOWN-BROKEN.md).
 
 ## 4. Payment Provider
 
@@ -70,7 +75,7 @@ Key constants in the script:
 4. The subscription is created with `status: 'pending'`, `receipt_status: 'pending'` (`SubscribeModal.tsx:52-59`)
 5. Admin reviews and approves/rejects via the admin dashboard
 
-No `bolt-stripe` skill was invoked. No Stripe dependency in `package.json`.
+No Stripe dependency in `package.json`.
 
 ## 5. Email Service
 
@@ -82,11 +87,21 @@ No `bolt-stripe` skill was invoked. No Stripe dependency in `package.json`.
 
 ## 7. Push Provider
 
-**None.** No push notifications. The app has a notifications system (the bell icon) that polls the `notifications` table via Supabase realtime or interval queries. No web push, no FCM, no APNs.
+**None.** No push notifications. The app has a notifications system (the bell icon) that polls the `notifications` table. No web push, no FCM, no APNs.
 
 ## 8. PWA / Service Worker
 
 **File:** `public/sw.js` (precache + offline cache)
 **Registration:** `src/main.tsx:9`
 
-The service worker handles precaching app assets and offline page serving. It does not integrate with any external push service. It responds to `SKIP_WAITING` and `PRECACHE_ASSETS` messages from the client.
+The service worker handles precaching app assets and offline page serving. It does not integrate with any external push service.
+
+## 9. Giphy API (chat GIFs)
+
+The chat tab searches Giphy using the public beta API key `dc6zaTOxFJmzC`:
+`src/pages/RoomPage.tsx:607`:
+```typescript
+const res = await fetch(`https://media.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${encodeURIComponent(query)}&limit=12`);
+```
+
+This uses Giphy's public beta key (not a registered API key). It's hardcoded, not in env vars.

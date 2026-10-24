@@ -5,7 +5,7 @@
 **File:** `src/context/AuthContext.tsx`
 
 The auth context wraps the entire app — `src/App.tsx:83`:
-```typescript
+```
 <AuthProvider>
   <NotificationsProvider>
     <PremiumProvider>
@@ -74,7 +74,7 @@ The admin page at `#/admin` (`App.tsx:30`) uses a **completely separate password
 
 The admin enters a password (`AdminPage.tsx:182-188`) which is sent to the `verify_admin_password` RPC (`AdminPage.tsx:144`):
 ```typescript
-const { data, error: rpcError } = await supabase.rpc('verify_admin_password', { p_password: password });
+const { data, rpcError } = await supabase.rpc('verify_admin_password', { p_password: password });
 ```
 
 The `verify_admin_password` function (`1a_fix_admin_credentials.sql:43`) compares against `admin_password_hash` in `app_settings` using `crypt()`:
@@ -116,7 +116,7 @@ The admin password hash is stored in `app_settings.admin_password_hash` in the d
 
 ## Password Change
 
-`admin_change_password(p_password, p_new_password)` (`1a:74`) verifies the current password and updates the hash. Called from `AdminPage.tsx` Settings tab (confirmed by the RPC name appearing in the client RPC list).
+`admin_change_password(p_password, p_new_password)` (`1a:74`) verifies the current password and updates the hash. Called from `AdminPage.tsx:2418` Settings tab.
 
 ## Logout
 

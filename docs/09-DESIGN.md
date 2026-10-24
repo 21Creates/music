@@ -74,12 +74,10 @@ fontFamily: {
 },
 ```
 
-**Loaded from Google Fonts** — `index.html:30`:
+**Loaded from Google Fonts** — `index.html:30` and `src/index.css:1`:
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 ```
-
-Also in `src/index.css:1`:
 ```css
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
 ```
@@ -97,15 +95,11 @@ Weights used: 400 (regular), 500 (medium), 600 (semibold), 700 (bold), 800 (extr
 
 Uses Tailwind's default 4px-based spacing system (1 unit = 0.25rem = 4px). No custom spacing override in `tailwind.config.js`.
 
-The design follows an **8px spacing system** per the design requirements: components use `p-2` (8px), `p-3` (12px), `p-4` (16px), `p-5` (20px), `p-6` (24px), `p-8` (32px), `gap-2` (8px), `gap-3` (12px), `gap-4` (16px).
+The design follows an **8px spacing system**: components use `p-2` (8px), `p-3` (12px), `p-4` (16px), `p-5` (20px), `p-6` (24px), `p-8` (32px), `gap-2` (8px), `gap-3` (12px), `gap-4` (16px).
 
 ## Border Radius Scale
 
 Tailwind defaults used: `rounded-lg` (8px), `rounded-xl` (12px), `rounded-2xl` (16px), `rounded-full` (9999px). No custom radius override in config.
-
-## Shadow Scale
-
-Tailwind defaults used with custom colored shadows: `shadow-lg shadow-electric-500/25` (primary button), `shadow-xl shadow-electric-500/30` (logo container). No custom shadow override in config.
 
 ## Key Component Styles
 
@@ -122,7 +116,6 @@ All defined in `src/index.css:46-200` (`@layer components`):
 - **`.glass-card`** (line 48-49): `bg-ink-850/80 backdrop-blur-xl border border-white/[0.06] rounded-2xl`
 - **`.glass-card-hover`** (line 52-53): glass-card + hover border/bg change
 - **`.glass-panel`** (line 56-58): `bg-ink-900/90 backdrop-blur-2xl border`
-- **`.surface`** (line 60-61): `bg-ink-850 border border-white/[0.04] rounded-2xl`
 
 ### Inputs
 - **`.input-field`** (line 108-113): Full width, ink-800 bg, white/[0.06] border, electric focus ring, rounded-xl
