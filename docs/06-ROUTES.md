@@ -6,7 +6,7 @@ Custom hash-based router (`src/hooks/useRoute.ts`). No React Router.
 
 | Path | Component | Guard | Renders |
 |---|---|---|---|
-| `#/admin` | `AdminPage.tsx` | Password gate (`App.tsx:30`, before auth check) | Admin login → 12-tab dashboard |
+| `#/admin` | `AdminPage.tsx` | Password gate (`App.tsx:30`, before auth check) | Admin login -> 12-tab dashboard |
 | `#/` | `HomePage.tsx` | `if (!user) return <AuthScreen />` (`App.tsx:45`) | Room discovery, create room |
 | `#/room?roomId=<uuid>` | `RoomPage.tsx` | Auth required (`App.tsx:55`) | Tracks, chat, polls, games, jam |
 | `#/profile` | `ProfilePage.tsx` | Auth required (`App.tsx:56`) | Profile, settings, premium |

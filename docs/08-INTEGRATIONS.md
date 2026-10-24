@@ -7,7 +7,7 @@
 - **Used for:** Auth, database (RLS-scoped), storage (bucket policies), realtime subscriptions
 
 ## 2. Google Apps Script Webhook (payment notifications)
-Full Apps Script template embedded in `AdminPage.tsx:1591-1788` (`APPS_SCRIPT_TEMPLATE` constant). It's a `doPost` handler that:
+Full Apps Script template embedded in `AdminPage.tsx:1591-1788` (`APPS_SCRIPT_TEMPLATE` constant). It is a `doPost` handler that:
 1. Parses JSON from edge function
 2. Deduplicates by reference using `CacheService`
 3. Sends HTML email via `MailApp.sendEmail`
@@ -16,8 +16,8 @@ Full Apps Script template embedded in `AdminPage.tsx:1591-1788` (`APPS_SCRIPT_TE
 Key constants: `NOTIFY_EMAIL = "you@yourdomain.com"` (placeholder), `BRAND_NAME = "Vinyl"`
 
 **Flow:**
-1. Admin saves deployed `/exec` URL via Webhook tab → stored in `app_settings.payment_webhook_url`
-2. User uploads receipt → `SubscribeModal.tsx:71-80` POSTs to edge function
+1. Admin saves deployed `/exec` URL via Webhook tab -> stored in `app_settings.payment_webhook_url`
+2. User uploads receipt -> `SubscribeModal.tsx:71-80` POSTs to edge function
 3. Edge function fetches URL from `public_get_webhook_url()`, POSTs subscription data to Apps Script
 
 **Admin test ping:** `AdminPage.tsx:1835-1853` — sends `{ type: 'ping' }` directly via `fetch()`
@@ -40,7 +40,7 @@ CORS headers included (`index.ts:3-7`). Requires valid Supabase JWT.
 5. Admin reviews and approves/rejects via dashboard
 
 ## 5. Email Service
-**None** (beyond Apps Script's `MailApp.sendEmail` running on Google's infrastructure).
+**None** (beyond Apps Script's `MailApp.sendEmail` running on Google infrastructure).
 
 ## 6. Analytics
 **None.** No GA, PostHog, Mixpanel. Admin dashboard has internal analytics via `admin_get_analytics` RPC.

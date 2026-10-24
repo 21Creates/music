@@ -32,7 +32,7 @@ amber-400 (premium), emerald-400 (success), sky-400 (info), orange-400 (warning)
 - **Sans/Display:** Inter (400, 500, 600, 700, 800) — Google Fonts
 - **Mono:** JetBrains Mono (500, 700)
 
-## Logo & Icons
+## Logo and Icons
 - **Logo:** Lucide `Disc3` icon in gradient container
 - **Favicon:** `public/favicon.svg` + PNG variants
 - **PWA icons:** 192px, 512px, maskable-512px

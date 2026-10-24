@@ -17,4 +17,4 @@ The edge function `supabase/functions/send-subscription-webhook/index.ts` uses:
 - `WEBHOOK_SECRET` (must be configured as edge function secret, line 37)
 
 ## No Third-Party API Keys in Env
-No Stripe, no Google Maps, no Firebase, no Sentry. The Google Apps Script webhook URL is stored in the database (`app_settings.payment_webhook_url`), not in env. Giphy uses a hardcoded public beta key (see 08-INTEGRATIONS.md).
+No Stripe, no Google Maps, no Firebase, no Sentry. The Google Apps Script webhook URL is stored in the database (`app_settings.payment_webhook_url`). Giphy uses a hardcoded public beta key (see 08-INTEGRATIONS.md).

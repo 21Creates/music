@@ -24,7 +24,7 @@ Total: ~413 interactive elements across all pages/components.
 | Create Room FAB | 206 | Open CreateRoomModal (or limit toast) |
 | Room name/description/visibility/join policy/passphrase | 355-394 | Create room form fields |
 | Discoverable toggle | 405 | Toggle flag |
-| Theme color picker | 418 | Select color (×8) |
+| Theme color picker | 418 | Select color (x8) |
 | Create Room submit | 430 | Call `create_room` RPC |
 | Invite code input + Redeem | 471/478 | Call `redeem_invite` RPC |
 
@@ -78,7 +78,7 @@ Queue, Chat, Members, Polls, Games, Top Charts — all at line 225
 | Invite code display + copy | 96-97 | Copy to clipboard |
 | Room name/description/visibility/join policy | 106-122 | Edit room fields |
 | Discoverable toggle | 132 | Toggle flag |
-| Theme color picker | 152 | Select color (×7) |
+| Theme color picker | 152 | Select color (x7) |
 | Member role select | 177 | Change role |
 | Remove member | 185 | Remove member |
 | Save Changes | 198 | Update room in DB |
@@ -154,7 +154,7 @@ Queue, Chat, Members, Polls, Games, Top Charts — all at line 225
 | Display name/avatar URL inputs | 176/180 | Edit profile |
 | Email (disabled) | 184 | Display only |
 | Save Changes | 186 | Update profiles table |
-| Notification toggles (×5) | 201 | Non-functional (local state only) |
+| Notification toggles (x5) | 201 | Non-functional (local state only) |
 | Volume slider | 214 | Set audioManager volume |
 | Crossfade toggle | 218 | Toggle crossfade |
 | Sign Out | 223 | Sign out |
@@ -176,7 +176,7 @@ Queue, Chat, Members, Polls, Games, Top Charts — all at line 225
 | Password input | 182 | Enter admin password |
 | Login button | 188 | Call `verify_admin_password` |
 
-### Tab bar: Overview, Users, Rooms, Premium, Ads, Announcements, Analytics, Logs, Export, Bug Check, Webhook, Settings (×12 tabs)
+### Tab bar: Overview, Users, Rooms, Premium, Ads, Announcements, Analytics, Logs, Export, Bug Check, Webhook, Settings (x12 tabs)
 
 ### Users Tab
 Search input, Grant/Revoke Premium buttons, Ban/Unban buttons
@@ -200,7 +200,7 @@ Days range buttons (7/14/30/90) — line 2032
 Search input (2144), action type select (2146), Export button (2157), Load More (2183)
 
 ### Export Tab
-Export Everything (2252), per-table Export buttons (×6, line 2268)
+Export Everything (2252), per-table Export buttons (x6, line 2268)
 
 ### Bug Check Tab
 Re-run Check (2328), Fix button per issue (2354)
@@ -209,7 +209,7 @@ Re-run Check (2328), Fix button per issue (2354)
 Webhook URL input, Save, Test Ping, Copy Apps Script
 
 ### Settings Tab
-Max Rooms Free/Premium inputs (2459/2462), Popup Title/Body/CTA inputs (2468-2476), Save & Publish (2478), Add/Edit Payment (2489/2502), Change Password form (2518-2537), Payment Form modal (2593-2628)
+Max Rooms Free/Premium inputs (2459/2462), Popup Title/Body/CTA inputs (2468-2476), Save and Publish (2478), Add/Edit Payment (2489/2502), Change Password form (2518-2537), Payment Form modal (2593-2628)
 
 ### Always visible
-Tab buttons (×12), Logout button (~155)
+Tab buttons (x12), Logout button (~155)

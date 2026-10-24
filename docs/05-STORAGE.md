@@ -4,11 +4,11 @@
 
 | Bucket | Public? | Created | Purpose |
 |---|---|---|---|
-| `vinyl-audio` | **private** | `002:57` | Audio track files |
+| `vinyl-audio` | private | `002:57` | Audio track files |
 | `vinyl-covers` | public | `002:61` | Room and track cover images |
 | `vinyl-avatars` | public | `002:65` | User avatar images |
 | `vinyl-chat` | public | `008:28` | Chat media (images, videos) |
-| `vinyl-receipts` | **private** | `6a:81` | Payment receipt uploads |
+| `vinyl-receipts` | private | `6a:81` | Payment receipt uploads |
 
 ## getPublicUrl Calls
 | File:line | Bucket | Usage |
@@ -41,9 +41,9 @@
 - **vinyl-receipts**: SELECT/INSERT/DELETE (authenticated + owner only)
 
 ## What Breaks If Public Buckets Go Private
-- **vinyl-covers** → Room/track covers fail to load (uses `getPublicUrl`, no signed URL fallback)
-- **vinyl-avatars** → Avatars fail to load (uses `getPublicUrl`, no signed URL fallback)
-- **vinyl-chat** → Chat media fails to load (uses `getPublicUrl`, no signed URL fallback)
+- **vinyl-covers** -> Room/track covers fail to load (uses `getPublicUrl`, no signed URL fallback)
+- **vinyl-avatars** -> Avatars fail to load (uses `getPublicUrl`, no signed URL fallback)
+- **vinyl-chat** -> Chat media fails to load (uses `getPublicUrl`, no signed URL fallback)
 
 Only `vinyl-audio` has a signed URL pattern (`audioUrl.ts`). The other three have no fallback.
 

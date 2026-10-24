@@ -2,7 +2,7 @@
 
 ## Auth Provider (`src/context/AuthContext.tsx`)
 
-Wraps entire app (`App.tsx:83`): `<AuthProvider>` → `<NotificationsProvider>` → `<PremiumProvider>` → `<AppContent>`.
+Wraps entire app (`App.tsx:83`): `<AuthProvider>` -> `<NotificationsProvider>` -> `<PremiumProvider>` -> `<AppContent>`.
 
 ## Session Establishment
 - On mount: `supabase.auth.getSession()` (`AuthContext.tsx:41`), then loads profile from `profiles` table
@@ -33,18 +33,18 @@ Trigger `handle_new_user()` (`001_profiles_auth.sql:70-85`) fires `AFTER INSERT 
 ## Dual Admin Auth
 
 ### 1. Regular app admin (`profiles.is_admin` column)
-The `is_admin` boolean on `profiles` (`001:46`). The `is_admin()` SQL function (`001:99-109`) checks this. Used by RLS policies for admin-only writes. **However, client code NEVER checks `is_admin` to gate UI** — the field exists but is not referenced for access control.
+The `is_admin` boolean on `profiles` (`001:46`). The `is_admin()` SQL function (`001:99-109`) checks this. Used by RLS policies for admin-only writes. However, client code NEVER checks `is_admin` to gate UI — the field exists but is not referenced for access control.
 
 ### 2. Admin dashboard — password-only gate (separate from login)
-Admin page at `#/admin` (`App.tsx:30`) uses a **completely separate password-based auth** that does NOT require Supabase login.
+Admin page at `#/admin` (`App.tsx:30`) uses a completely separate password-based auth that does NOT require Supabase login.
 
-- Admin enters password (`AdminPage.tsx:182-188`) → sent to `verify_admin_password` RPC (`AdminPage.tsx:144`)
+- Admin enters password (`AdminPage.tsx:182-188`) -> sent to `verify_admin_password` RPC (`AdminPage.tsx:144`)
 - `verify_admin_password` (`1a_fix_admin_credentials.sql:43`) compares against `admin_password_hash` using `crypt()`/`pgcrypto`
 - Password kept in React state, passed as `p_password` to every admin RPC
-- Admin RPCs granted to `anon, authenticated` (`7a_restore_anon_admin_rpc_grants.sql:21-61`) — **admin dashboard works without Supabase login**
+- Admin RPCs granted to `anon, authenticated` (`7a_restore_anon_admin_rpc_grants.sql:21-61`) — admin dashboard works without Supabase login
 
 ### Password history
-- Migration `009`: plaintext `admin_password` default `'admin123'`
+- Migration `009`: plaintext `admin_password` default `admin123`
 - Migration `1a`: replaced with `admin_password_hash` (crypt hash), dropped plaintext column
 - `admin_password_hash` protected: `REVOKE SELECT` from authenticated (`6c:18`), only `verify_admin_password` (SECURITY DEFINER) can read it
 

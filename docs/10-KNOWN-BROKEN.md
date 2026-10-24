@@ -4,10 +4,10 @@
 **File:** `AdminPage.tsx:146` — Shows "Unable to reach the server" for any RPC failure. Actual `rpcError.message` never displayed. Makes debugging impossible.
 
 ## 2. `comments` table — orphaned schema
-Created in `002:170` but **never queried by client code** (zero `.from('comments')` matches in `src/`). Feature never built or removed. Notification types `comment_on_track` and `reply_to_comment` still exist in `NotificationsBell.tsx:8-9`.
+Created in `002:170` but never queried by client code (zero `.from('comments')` matches in `src/`). Feature never built or removed. Notification types `comment_on_track` and `reply_to_comment` still exist in `NotificationsBell.tsx:8-9`.
 
 ## 3. Ads system — admin-only, never displayed
-`ads`/`ad_impressions` tables exist with admin CRUD RPCs, but **no client component renders ads**. Grep for `.from('ads')` outside AdminPage returns zero matches.
+`ads`/`ad_impressions` tables exist with admin CRUD RPCs, but no client component renders ads. Grep for `.from('ads')` outside AdminPage returns zero matches.
 
 ## 4. Notification settings toggles are non-functional
 **File:** `ProfilePage.tsx:201` — Five toggle switches only update local React state. No API call, no DB write. Reset on reload.

@@ -1,7 +1,6 @@
 # 03 — Database
 
 ## Supabase Project
-- **URL:** from `.env:1`
 - **Client:** `src/lib/supabase.ts:6-11` — `persistSession: true`, `autoRefreshToken: true`
 - **Auth:** Email/password, no confirmation, no social providers
 
@@ -17,7 +16,7 @@
 | 006 | `006_notifications_room_chat.sql` | `notifications`, `room_messages` tables |
 | 007 | `007_add_anagram_game_type.sql` | Add `anagram` to game_type enum |
 | 008 | `008_chat_media_and_fixes.sql` | `vinyl-chat` bucket, media columns on room_messages |
-| 009 | `009_admin_password_and_live_publish.sql` | `admin_password` column (plaintext default `'admin123'`) |
+| 009 | `009_admin_password_and_live_publish.sql` | `admin_password` column (plaintext default `admin123`) |
 | 010-014 | Various | Admin account creation/cleanup, password-only admin access |
 | 015 | `015_admin_expansion.sql` | 40+ admin RPC functions |
 | 016-020 | Various | Premium feature management, pricing/webhook columns, admin RPCs |
@@ -41,7 +40,7 @@
 | `track_plays` | `002:145` | `id`, `track_id FK`, `room_id FK`, `user_id FK`, `played_at` | Enabled |
 | `listening_events` | (006+) | `id`, `room_id`, `track_id`, `user_id`, `listened_seconds (int)` | Enabled |
 
-### Polls & Games
+### Polls and Games
 | Table | Created | Key columns |
 |---|---|---|
 | `polls` | `003:6` | `id`, `room_id`, `created_by`, `question`, `type (enum poll/survey)`, `multiple_choice`, `closes_at` |
@@ -55,7 +54,7 @@
 | `jam_sessions` | `003:300` | `id`, `room_id`, `host_id`, `status (enum active/ended)`, `current_track_id`, `started_at`, `ended_at` |
 | `jam_participants` | `003:340` | `id`, `jam_id`, `user_id`, `joined_at` |
 
-### Notifications & Chat
+### Notifications and Chat
 | Table | Created | Key columns |
 |---|---|---|
 | `notifications` | `006:6` | `id`, `user_id`, `type`, `message`, `room_id`, `is_read`, `created_at` |
@@ -93,7 +92,7 @@
 | `redeem_invite` | Redeem single-use invite |
 | `approve_join_request` / `reject_join_request` | Admin approve/reject pending member |
 | `start_jam` / `end_jam` | Start/end jam session |
-| `get_entitlements` | Get user's tier (`premium`/`free`) |
+| `get_entitlements` | Get user tier (premium/free) |
 | `public_get_webhook_url` | Get payment webhook URL |
 | `verify_admin_password` | Verify admin password against hash |
 
@@ -110,6 +109,6 @@ RLS enabled on ALL tables. Patterns:
 ## Schema Drift
 | Issue | Details |
 |---|---|
-| `comments` table | Created in `002:170` but **never queried by client code** (zero `.from('comments')` matches in `src/`) |
-| `ads` / `ad_impressions` | Admin can create/manage but **no client component renders ads to users** |
+| `comments` table | Created in `002:170` but never queried by client code (zero `.from('comments')` matches in `src/`) |
+| `ads` / `ad_impressions` | Admin can create/manage but no client component renders ads to users |
 | `activity_logs` | Only written by admin RPCs, never by client code directly |

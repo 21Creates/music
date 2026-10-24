@@ -9,15 +9,15 @@ Complete specification for rebuilding the Vinyl music platform. Every claim back
 | # | Document | Covers |
 |---|---|---|
 | 01 | STACK.md | Framework, build tool, language, router, state, styling, testing, deploy target |
-| 02 | ENV.md | Environment variables (client + edge function), no third-party API keys |
+| 02 | ENV.md | Environment variables (client + edge function) |
 | 03 | DATABASE.md | 28+ tables, 60+ RPCs, 5 storage buckets, 40 migrations, schema drift |
 | 04 | AUTH.md | Auth provider, session persistence, dual admin auth, route guards |
 | 05 | STORAGE.md | 5 buckets, public/private, getPublicUrl/createSignedUrl calls, policies |
 | 06 | ROUTES.md | Hash-based router, route table, layout structure |
-| 07 | CLICKABLES.md | All 413 interactive elements with file:line and action |
+| 07 | CLICKABLES.md | All ~413 interactive elements with file:line and action |
 | 08 | INTEGRATIONS.md | Supabase, Google Apps Script webhook, edge function, Giphy, PWA |
 | 09 | DESIGN.md | Color palette, fonts, component styles, animations |
-| 10 | KNOWN-BROKEN.md | 15 documented issues: orphaned tables, non-functional toggles, security gaps |
+| 10 | KNOWN-BROKEN.md | 15 documented issues |
 
 ## Quick Facts
 
