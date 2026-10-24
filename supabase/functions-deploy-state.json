@@ -1,0 +1,9 @@
+{
+  "projectId": "72296402",
+  "functions": {
+    "send-subscription-webhook": {
+      "hasChanged": false,
+      "hash": "6adc3cbc4d6d3ef2235ed9c8cc941bcc9b676c1e931db5c493c3f7541893d919"
+    }
+  }
+}

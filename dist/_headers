@@ -1,0 +1,9 @@
+/*.webmanifest
+  Content-Type: application/manifest+json
+
+/sw.js
+  Service-Worker-Allowed: /
+  Cache-Control: no-cache
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

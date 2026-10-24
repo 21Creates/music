@@ -1,0 +1,33 @@
+{
+  "name": "Vinyl - Collaborative Music",
+  "short_name": "Vinyl",
+  "description": "Listen to unreleased music together with friends in real-time listening rooms",
+  "id": "/",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "theme_color": "#0D0C0B",
+  "background_color": "#0D0C0B",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["music", "entertainment", "social"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "short_name": "Explore",
+      "name": "Browse unreleased rooms",
+      "url": "/#/explore"
+    },
+    {
+      "short_name": "Profile",
+      "name": "My profile and library",
+      "url": "/#/profile"
+    }
+  ]
+}

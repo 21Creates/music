@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0D0C0B" />
+    <title>Offline - Vinyl</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        background: #0D0C0B;
+        color: #E8EAEE;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        display: flex;
+        min-height: 100vh;
+        min-height: 100dvh;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+      }
+      .container { max-width: 400px; }
+      .disc {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 2rem;
+        animation: spin 3s linear infinite;
+      }
+      h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+      p { font-size: 0.875rem; color: #71718A; line-height: 1.5; }
+      .retry {
+        margin-top: 2rem;
+        display: inline-block;
+        padding: 0.625rem 1.5rem;
+        background: #4D7CFE;
+        color: #fff;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        font-size: 0.875rem;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .retry:hover { background: #6B92FE; }
+      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <svg class="disc" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <rect width="512" height="512" rx="96" fill="#0D0C0B"/>
+        <g transform="translate(256 256)">
+          <circle r="140" fill="none" stroke="#4D7CFE" stroke-width="2" opacity="0.2"/>
+          <circle r="120" fill="none" stroke="#4D7CFE" stroke-width="1.5" opacity="0.3"/>
+          <circle r="56" fill="#0D0C0B" stroke="#4D7CFE" stroke-width="2"/>
+          <circle r="8" fill="#4D7CFE"/>
+          <line x1="0" y1="-140" x2="0" y2="-56" stroke="#4D7CFE" stroke-width="1.5" opacity="0.4"/>
+        </g>
+      </svg>
+      <h1>You're offline</h1>
+      <p>Your saved library and cached pages still work. Connect to the internet to load new content.</p>
+      <a href="/" class="retry">Try again</a>
+    </div>
+  </body>
+</html>
