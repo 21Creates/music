@@ -2,63 +2,50 @@
 
 ## Buckets
 
-| Bucket | Public? | Created in | Purpose |
+| Bucket | Public? | Created | Purpose |
 |---|---|---|---|
-| `vinyl-audio` | **private** (set false in `6a:50`) | `002:57` | Audio track files |
+| `vinyl-audio` | **private** | `002:57` | Audio track files |
 | `vinyl-covers` | public | `002:61` | Room and track cover images |
 | `vinyl-avatars` | public | `002:65` | User avatar images |
 | `vinyl-chat` | public | `008:28` | Chat media (images, videos) |
 | `vinyl-receipts` | **private** | `6a:81` | Payment receipt uploads |
 
-## getPublicUrl calls
-
+## getPublicUrl Calls
 | File:line | Bucket | Usage |
 |---|---|---|
-| `src/pages/ProfilePage.tsx:67` | `vinyl-avatars` | Gets public URL for uploaded avatar |
-| `src/pages/RoomPage.tsx:286` | `vinyl-covers` | Gets public URL for uploaded track cover art |
-| `src/pages/RoomPage.tsx:1113` | `vinyl-covers` | Gets public URL for uploaded cover during track upload |
-| `src/pages/RoomPage.tsx:599` | `vinyl-chat` | Gets public URL for uploaded chat media |
+| `src/pages/ProfilePage.tsx:67` | `vinyl-avatars` | Avatar URL |
+| `src/pages/RoomPage.tsx:286` | `vinyl-covers` | Track cover art |
+| `src/pages/RoomPage.tsx:1113` | `vinyl-covers` | Cover during track upload |
+| `src/pages/RoomPage.tsx:599` | `vinyl-chat` | Chat media URL |
 
-## createSignedUrl calls
-
+## createSignedUrl Calls
 | File:line | Bucket | Usage |
 |---|---|---|
-| `src/lib/audioUrl.ts:23-25` | `vinyl-audio` | Creates signed URL for audio playback (1-hour expiry, `SIGNED_URL_EXPIRY = 3600`) |
-| `supabase/functions/send-subscription-webhook/index.ts:98-101` | `vinyl-receipts` | Creates signed URL (3600s) for receipt image in webhook notification email |
+| `src/lib/audioUrl.ts:23-25` | `vinyl-audio` | Signed URL for audio playback (1-hour expiry) |
+| `supabase/functions/send-subscription-webhook/index.ts:98-101` | `vinyl-receipts` | Signed URL (3600s) for receipt in webhook notification |
 
-## Upload surfaces
-
-| Surface | File:line | Bucket | Who can upload |
+## Upload Surfaces
+| Surface | File:line | Bucket | Who |
 |---|---|---|---|
-| Avatar upload | `src/pages/ProfilePage.tsx:65` | `vinyl-avatars` | Any authenticated user |
-| Track audio upload | `src/pages/RoomPage.tsx:1129` | `vinyl-audio` | Room admins |
-| Track/room cover upload | `src/pages/RoomPage.tsx:1108,1129` | `vinyl-covers` | Room admins |
-| Chat media upload | `src/pages/RoomPage.tsx:594` | `vinyl-chat` | Room members with premium `chat_attachments` feature |
-| Payment receipt upload | `src/components/SubscribeModal.tsx:43` | `vinyl-receipts` | Any authenticated user |
+| Avatar upload | `ProfilePage.tsx:65` | `vinyl-avatars` | Any authenticated user |
+| Track audio upload | `RoomPage.tsx:1129` | `vinyl-audio` | Room admins |
+| Track/room cover | `RoomPage.tsx:1108,1129` | `vinyl-covers` | Room admins |
+| Chat media | `RoomPage.tsx:594` | `vinyl-chat` | Premium users with `chat_attachments` |
+| Payment receipt | `SubscribeModal.tsx:43` | `vinyl-receipts` | Any authenticated user |
 
-## Delete surfaces
+## Storage Policies (after migration `6a`)
+- **vinyl-audio**: SELECT/INSERT (authenticated), DELETE (owner check)
+- **vinyl-covers**: SELECT (public), INSERT/DELETE (authenticated + owner)
+- **vinyl-avatars**: SELECT (public), INSERT/DELETE (authenticated + owner)
+- **vinyl-chat**: SELECT/INSERT/DELETE (authenticated + owner)
+- **vinyl-receipts**: SELECT/INSERT/DELETE (authenticated + owner only)
 
-| Surface | File:line | Bucket |
-|---|---|---|
-| Track audio delete | `src/pages/RoomPage.tsx:268` | `vinyl-audio` |
-| Receipt | NOT FOUND | `vinyl-receipts` (no client-side delete) |
+## What Breaks If Public Buckets Go Private
+- **vinyl-covers** → Room/track covers fail to load (uses `getPublicUrl`, no signed URL fallback)
+- **vinyl-avatars** → Avatars fail to load (uses `getPublicUrl`, no signed URL fallback)
+- **vinyl-chat** → Chat media fails to load (uses `getPublicUrl`, no signed URL fallback)
 
-## Storage policies (final state after migration `6a`)
+Only `vinyl-audio` has a signed URL pattern (`audioUrl.ts`). The other three have no fallback.
 
-- **vinyl-audio**: SELECT (authenticated), INSERT (authenticated), DELETE (authenticated + `owner = auth.uid()`)
-- **vinyl-covers**: SELECT (public — no auth needed), INSERT (authenticated), DELETE (authenticated + owner)
-- **vinyl-avatars**: SELECT (public), INSERT (authenticated), DELETE (authenticated + owner)
-- **vinyl-chat**: SELECT (authenticated only), INSERT (authenticated + owner), DELETE (authenticated + owner)
-- **vinyl-receipts**: SELECT (authenticated + owner only), INSERT (authenticated + owner), DELETE (authenticated + owner)
-
-## What breaks if public buckets are made private
-
-- **vinyl-covers** → Room and track cover images would fail to load. `RoomPage.tsx` uses `getPublicUrl` to display covers. No signed URL fallback exists for covers.
-- **vinyl-avatars** → User avatars would fail to load. `ProfilePage.tsx` uses `getPublicUrl`. No signed URL fallback exists for avatars.
-- **vinyl-chat** → Chat media images would fail to load. `RoomPage.tsx` uses `getPublicUrl` for chat media display. No signed URL fallback exists.
-
-Only `vinyl-audio` has a signed URL pattern (`audioUrl.ts`). The other three public buckets have no signed URL fallback — making them private would break all image display.
-
-## Edge function receipt access
-
-The edge function `send-subscription-webhook/index.ts:98-101` calls `createSignedUrl` on `vinyl-receipts` with 3600s expiry to include a temporary receipt image URL in the webhook notification. This correctly handles the private bucket — the signed URL expires after 1 hour.
+## Edge Function Receipt Access
+`send-subscription-webhook/index.ts:98-101` uses `createSignedUrl` on `vinyl-receipts` with 3600s expiry — correctly handles the private bucket.
