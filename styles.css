@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{--bg:#0D0C0B;--card:#1B1917;--fg:#F3ECDD;--acid:#DFFF3F;--mute:#8A8378;--red:#FF4D3D}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:16px 16px calc(120px + env(safe-area-inset-bottom))}
+button,input,select{font:inherit;min-height:44px;border-radius:8px;border:1px solid var(--mute);background:var(--card);color:var(--fg);padding:0 12px}
+button.p{background:var(--acid);color:var(--bg);border-color:var(--acid);font-weight:600}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--acid);outline-offset:2px}
+.card{background:var(--card);border-radius:8px;padding:12px;margin:8px 0;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.err{color:var(--red)}.mute{color:var(--mute)}nav{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
+nav button[aria-current=true]{border-color:var(--acid);color:var(--acid)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);padding:8px 16px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px;align-items:center}
+form{display:flex;flex-direction:column;gap:8px}
